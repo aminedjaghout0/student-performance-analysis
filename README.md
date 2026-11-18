@@ -4,6 +4,22 @@
 > The full documentation (dataset description, methodology, results, and
 > visualisations) will be completed as each phase of the project is finished.
 
+## Dataset
+
+The project uses the [UCI Student Performance dataset](https://archive.ics.uci.edu/dataset/320/student+performance)
+(Cortez & Silva, 2008), which records academic and demographic information for
+secondary-school students in Portugal:
+
+- `student-mat.csv` — 395 students, Mathematics course
+- `student-por.csv` — 649 students, Portuguese course
+
+Each record has **33 columns** (16 numerical, 17 categorical) and three grade
+variables: `G1` (first period), `G2` (second period) and `G3` (final grade,
+0–20, the prediction target). The dataset contains **no missing values and no
+duplicate rows**, and all values fall within the documented ranges
+(e.g. age 15–22, absences 0–75). The raw files are kept unmodified in
+`data/raw/`.
+
 ## Planned objectives
 
 - Analyse students' academic performance using the
@@ -20,7 +36,7 @@
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 1 | Environment setup & repository structure | ✅ In progress |
-| 2 | Dataset acquisition & inspection | ⬜ Not started |
+| 2 | Dataset acquisition & inspection | ✅ Complete |
 | 3 | Data cleaning & preprocessing | ⬜ Not started |
 | 4 | Exploratory Data Analysis | ⬜ Not started |
 | 5 | Data visualisation | ⬜ Not started |
