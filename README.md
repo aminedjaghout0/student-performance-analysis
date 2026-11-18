@@ -20,6 +20,42 @@ duplicate rows**, and all values fall within the documented ranges
 (e.g. age 15–22, absences 0–75). The raw files are kept unmodified in
 `data/raw/`.
 
+## Data-cleaning methodology
+
+Cleaning decisions are documented and reproducible (`src/data_cleaning.py`):
+
+1. **Whitespace** in string categories is trimmed (prevents a category
+   splitting in two during one-hot encoding).
+2. **Missing values** — verified: the UCI dataset contains none.
+3. **Duplicates** — verified: no duplicated rows.
+4. **Range validation** — every value is checked against the ranges
+   documented in the UCI `student.txt` file (age 15–22, grades 0–20,
+   ordinal scales 1–5, …).
+5. **Non-participants** — 38 Math students have `G3 = 0`. The dataset
+   documentation shows these students **did not sit the final exam**
+   (absence/withdrawal), so a 0 is a *missing* grade, not a measured one.
+   They are dropped for regression modelling; the decision and count are
+   reported by the pipeline instead of being silently applied.
+
+Result: **357 clean Math records** (395 − 38).
+
+## Preprocessing (leakage-safe)
+
+`src/preprocessing.py` builds a scikit-learn `ColumnTransformer` fitted
+**on the training set only**:
+
+- **Numeric features** → median imputation + `StandardScaler`
+  (median is robust to outliers such as `absences = 75`).
+- **Categorical features** → most-frequent imputation + one-hot encoding
+  with `handle_unknown="ignore"`.
+- **Split**: 80 % train / 20 % test, `random_state=42` for full
+  reproducibility → 285 training / 72 test records.
+- After encoding: **58 model features** (15 numeric + 43 one-hot).
+
+`G1` and `G2` are kept as features by design: both are known before the
+final exam, so predicting `G3` from them is a legitimate forecasting
+scenario, not target leakage.
+
 ## Planned objectives
 
 - Analyse students' academic performance using the
@@ -37,7 +73,7 @@ duplicate rows**, and all values fall within the documented ranges
 |-------|-------------|--------|
 | 1 | Environment setup & repository structure | ✅ In progress |
 | 2 | Dataset acquisition & inspection | ✅ Complete |
-| 3 | Data cleaning & preprocessing | ⬜ Not started |
+| 3 | Data cleaning & preprocessing | ✅ Complete |
 | 4 | Exploratory Data Analysis | ⬜ Not started |
 | 5 | Data visualisation | ⬜ Not started |
 | 6 | Machine-learning model development | ⬜ Not started |
