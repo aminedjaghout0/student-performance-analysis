@@ -1,0 +1,42 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Virtual environment ---
+.venv/
+venv/
+env/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+
+# --- IDE / editors ---
+.vscode/
+.idea/
+*.swp
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Data (keep the project portable: datasets are downloaded by the user
+# or by scripts, never committed to GitHub) ---
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# --- Trained models and generated artifacts ---
+models/*
+!models/.gitkeep
+results/visualizations/*
+!results/visualizations/.gitkeep
+results/model_metrics/*
+!results/model_metrics/.gitkeep
+
+# --- Logs ---
+*.log
